@@ -1,0 +1,32 @@
+
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+export ZSH="$HOME/.oh-my-zsh"
+export PATH=$PATH:$HOME/.config/rofi/bin:$HOME/.scripts/
+export FZF_DEFAULT_COMMAND='find . -type f'
+export EDITOR=nvim
+
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+plugins=(git archlinux dotnet colorize common-aliases colored-man-pages encode64 git-escape-magic git-extras sudo)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+### Aliasses
+alias l="colorls"
+alias ls="colorls"
+alias la="colorls -la"
+alias vs="vscodium"
+alias cat="ccat"
+alias vim="nvim"
+alias n="nnn"
+alias i3conf="nvim ~/.config/i3/config"
+
+### Pywal
+#(cat ~/.cache/wal/sequences &)
+
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
