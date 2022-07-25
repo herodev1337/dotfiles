@@ -1,0 +1,45 @@
+#!/bin/bash
+# i3block for the displaying the wifi connectivity level
+# If the wifi interface exists but no connection is active, "down" shall be displayed.
+
+ETH="enp2s0"
+WLAN="wlan0"
+CURRENT=null
+
+QUALITY=$(grep $WLAN /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
+
+checkPrimary(){
+  if [[ "$(cat /sys/class/net/$ETH/operstate)" = 'down' ]]; then
+    checkSecondary
+  else
+    $CURRENT="$ETH"
+  fi
+}
+
+checkSecondary(){
+  if [[ "$(cat /sys/class/net/$SECONDARY/operstate)" = 'down' ]]; then
+    echo "down"
+    echo "down"
+    echo "#FF0000"
+    exit
+  else
+    $CURRENT="$WLAN" 
+  fi
+}
+
+echo $CURRENT
+
+if [[ "$CURRENT" = "$WLAN" ]]; then
+  echo $QUALITY% 
+    if [[ $QUALITY -ge 80 ]]; then
+        echo "#00FF00"
+    elif [[ $QUALITY -ge 60 ]]; then
+        echo "#FFF600"
+    elif [[ $QUALITY -ge 40 ]]; then
+        echo "#FFAE00"
+    else
+        echo "#FF0000"
+    fi
+  else
+    echo "ETH UP"  
+fi

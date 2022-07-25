@@ -1,0 +1,24 @@
+!/bin/bash
+# Dynamic wallpaper + betterlockscreen updater
+
+THEME=lakeside
+CURRENT_WALLPAPER="$HOME/.cache/dwall_current"
+
+export PATH=/usr/local/bin/:/usr/bin/ DESKTOP_SESSION=" " DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/1000/bus"
+
+echo "Current Home: $HOME"
+echo "CW: $CURRENT_WALLPAPER"
+
+if touch "$CURRENT_WALLPAPER"; then
+    echo "CW should be touched"
+else
+    echo "CW touch failed"
+fi
+
+echo "Setting wallpaper..."
+/usr/bin/dwall -s "$THEME"
+
+echo "Set wallpaper and color palette... Next betterlockscreen"
+/usr/bin/betterlockscreen -u $(cat "$CURRENT_WALLPAPER")
+
+echo "Successfully updated betterlockscreen!"

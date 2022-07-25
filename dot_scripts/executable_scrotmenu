@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# options to be displayed
+option0="area"
+option1="screen"
+option2="window"
+
+# options to be displyed
+options="$option0\n$option1\n$option2"
+screenshotfolder="$(xdg-user-dir PICTURES)/Screenshots"
+
+selected="$(echo -e "$options" | rofi -lines 3 -dmenu -p "scrot")"
+case $selected in
+    $option0)
+        cd "$screenshotfolder" && scrot -s;;
+    $option1)
+	cd "$screenshotfolder" && sleep 1 && scrot;;
+    $option2)
+        cd "$screenshotfolder" && sleep 1 && scrot -u;;
+esac
